@@ -14,7 +14,6 @@ const Header = () => {
     }
     useEffect(() => {
         //Load the menu links
-        console.log('this is useEffect');
         loadMenuLinksData();
     }, [])
 
