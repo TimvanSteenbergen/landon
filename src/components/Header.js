@@ -1,12 +1,28 @@
-import React from 'react';
-import menuLinksData from './data/menu_links.json';
+import React, { useState, useEffect } from 'react';
+// import menuLinksData from './data/menu_links.json';
 
 const Header = () => {
+    const [menuLinksData, setMenuLinksData] = useState([]);
+
+    const loadMenuLinksData = async () => {
+        // Query the API Gateway
+        const resp = await fetch('https://mxkrp9o184.execute-api.eu-west-1.amazonaws.com/Production/menu_links');
+        let jsonData = await resp.json();
+
+        // Assign response data to the state variable
+        setMenuLinksData(jsonData);
+    }
+    useEffect(() => {
+        //Load the menu links
+        console.log('this is useEffect');
+        loadMenuLinksData();
+    }, [])
+
     return (
         <header id="intro">
             <article className="fullheight">
                 <div className="hgroup">
-                    <h1>Tims Hotel</h1>
+                    <h1>Tim's Hotel</h1>
                     <h2>West London</h2>
                     <p><a href="#welcome"><img src="https://landonhotel.com/images/misc/arrow.png" alt="down arrow" /></a></p>
                 </div>
@@ -18,7 +34,7 @@ const Header = () => {
                     <ul>
                         {
                             menuLinksData.map((link) =>
-                            <li><a className={`icon ${link.class}`} href={link.href}><span>{link.text}</span></a></li>)
+                                <li><a className={`icon ${link.class}`} href={link.href}><span>{link.text}</span></a></li>)
                         }
                     </ul>
                 </div>
